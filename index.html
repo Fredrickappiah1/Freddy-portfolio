@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Front-end Developer & Data Specialist</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="icon" href="fav1.png" sizes="32x32" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.8); }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .animate-slide-left { animation: slideInLeft 0.8s ease-out forwards; }
+        .animate-slide-right { animation: slideInRight 0.8s ease-out forwards; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+        .gradient-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .blob {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: blob 8s ease-in-out infinite;
+        }
+
+        @keyframes blob {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        }
+
+        .hidden-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .hidden-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-bar {
+            transition: width 1.5s ease-out;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#home" class="text-2xl font-bold gradient-text">Portfolio</a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link hover:text-indigo-400 transition-colors">Home</a>
+                    <a href="#about" class="nav-link hover:text-indigo-400 transition-colors">About</a>
+                    <a href="#services" class="nav-link hover:text-indigo-400 transition-colors">Services</a>
+                    <a href="#portfolio" class="nav-link hover:text-indigo-400 transition-colors">Portfolio</a>
+                    <a href="#contact" class="nav-link hover:text-indigo-400 transition-colors">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menuBtn" class="md:hidden text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden hidden mt-4 pb-4 space-y-4">
+                <a href="#home" class="block hover:text-indigo-400 transition-colors">Home</a>
+                <a href="#about" class="block hover:text-indigo-400 transition-colors">About</a>
+                <a href="#services" class="block hover:text-indigo-400 transition-colors">Services</a>
+                <a href="#portfolio" class="block hover:text-indigo-400 transition-colors">Portfolio</a>
+                <a href="#contact" class="block hover:text-indigo-400 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center relative overflow-hidden">
+        <!-- Background Blobs -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-purple-600 opacity-20 blob blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-600 opacity-20 blob blur-3xl"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+            <div class="animate-slide-left">
+                <p class="text-indigo-400 text-lg mb-2">Hello, I'm</p>
+                <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                    <span class="gradient-text">Frederick Appiah</span>
+                </h1>
+                <div class="text-xl md:text-2xl text-gray-300 mb-6 h-8">
+                    <span id="typewriter"></span><span class="animate-pulse">|</span>
+                </div>
+                <p class="text-gray-400 text-lg mb-8 max-w-lg">
+                    Crafting beautiful digital experiences through clean code, stunning designs, and strategic marketing solutions.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#portfolio" class="px-8 py-3 gradient-bg rounded-full font-semibold hover:opacity-90 transition-opacity animate-pulse-glow">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="px-8 py-3 border-2 border-indigo-500 rounded-full font-semibold hover:bg-indigo-500/20 transition-colors">
+                        Contact Me
+                    </a>
+                </div>
+                
+                <!-- Social Links
+                <div class="flex gap-4 mt-8">
+                    <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                        <i class="fab fa-dribbble"></i>
+                    </a>
+                </div>
+                -->
+            </div>
+            
+            <div class="animate-slide-right flex justify-center">
+                <div class="relative">
+                    <div class="w-72 h-72 md:w-96 md:h-96 gradient-bg rounded-full animate-float"></div>
+                    <div class="absolute inset-4 bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
+                        <img src="mypic2.png" alt="Frederick Appiah" class="w-full h-full object-cover" style="object-position: center 10%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-gray-400">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="hidden-section">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    About <span class="gradient-text">Me</span>
+                </h2>
+                <p class="text-gray-400 text-center max-w-2xl mx-auto mb-16">
+                    Get to know more about my journey and expertise
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="hidden-section">
+                    <div class="relative">
+                        <div class="w-full h-96 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-1">
+                            <div class="w-full h-full bg-gray-900 rounded-xl overflow-hidden flex items-center justify-center">
+                                <img src="mypic1.png" alt="About me" class="w-full h-full object-cover" style="object-position: center 20%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden-section space-y-6">
+                    <h3 class="text-3xl font-bold">A Passionate Multi-Skilled Professional</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        With expertise spanning front-end development, UI design, data entry, and SMS marketing, 
+                        I bring a unique blend of technical and creative skills to every project. My goal is to 
+                        create impactful digital solutions that drive results.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed">
+                        I believe in clean code, intuitive design, and data-driven strategies. Whether you need 
+                        a stunning website, a seamless user interface, accurate data management, or effective 
+                        marketing campaigns, I've got you covered.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="bg-gray-800 p-4 rounded-xl text-center card-hover">
+                            <h4 class="text-3xl font-bold gradient-text">2+</h4>
+                            <p class="text-gray-400 text-sm">Years Experience</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl text-center card-hover">
+                            <h4 class="text-3xl font-bold gradient-text">30+</h4>
+                            <p class="text-gray-400 text-sm">Projects Completed</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl text-center card-hover">
+                            <h4 class="text-3xl font-bold gradient-text">20+</h4>
+                            <p class="text-gray-400 text-sm">Happy Clients</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-xl text-center card-hover">
+                            <h4 class="text-3xl font-bold gradient-text">4</h4>
+                            <p class="text-gray-400 text-sm">Specializations</p>
+                        </div>
+                    </div>
+
+                    <a href="CV2 .pdf" target="_blank" class="inline-block px-8 py-3 gradient-bg rounded-full font-semibold hover:opacity-90 transition-opacity mt-4">
+                        View  CV <i class="fas fa-download ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="hidden-section">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    My <span class="gradient-text">Services</span>
+                </h2>
+                <p class="text-gray-400 text-center max-w-2xl mx-auto mb-16">
+                    Comprehensive solutions tailored to your needs
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Front-end Development -->
+                <div class="hidden-section bg-gray-800 p-8 rounded-2xl card-hover group">
+                    <div class="w-16 h-16 gradient-bg rounded-xl flex items-center justify-center mb-6 group-hover:animate-pulse-glow">
+                        <i class="fas fa-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Front-end Development</h3>
+                    <p class="text-gray-400 mb-4">
+                        Building responsive, fast, and interactive websites using modern technologies like React, Vue, and vanilla JavaScript.
+                    </p>
+                    <ul class="text-gray-500 text-sm space-y-2">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>React & Vue.js</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>HTML5 & CSS3</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Tailwind CSS</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Performance Optimization</li>
+                    </ul>
+                </div>
+
+                <!-- UI Design -->
+                <div class="hidden-section bg-gray-800 p-8 rounded-2xl card-hover group">
+                    <div class="w-16 h-16 gradient-bg rounded-xl flex items-center justify-center mb-6 group-hover:animate-pulse-glow">
+                        <i class="fas fa-palette text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">UI Design</h3>
+                    <p class="text-gray-400 mb-4">
+                        Creating beautiful, intuitive interfaces that enhance user experience and drive engagement.
+                    </p>
+                    <ul class="text-gray-500 text-sm space-y-2">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Figma & Adobe XD</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Wireframing</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Prototyping</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Design Systems</li>
+                    </ul>
+                </div>
+
+                <!-- Data Entry -->
+                <div class="hidden-section bg-gray-800 p-8 rounded-2xl card-hover group">
+                    <div class="w-16 h-16 gradient-bg rounded-xl flex items-center justify-center mb-6 group-hover:animate-pulse-glow">
+                        <i class="fas fa-database text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Data Entry</h3>
+                    <p class="text-gray-400 mb-4">
+                        Accurate and efficient data management services to keep your business organized and running smoothly.
+                    </p>
+                    <ul class="text-gray-500 text-sm space-y-2">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Data Processing</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Excel & Google Sheets</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Data Cleaning</li>
+                    </ul>
+                </div>
+
+                <!-- SMS Marketing -->
+                <div class="hidden-section bg-gray-800 p-8 rounded-2xl card-hover group">
+                    <div class="w-16 h-16 gradient-bg rounded-xl flex items-center justify-center mb-6 group-hover:animate-pulse-glow">
+                        <i class="fas fa-sms text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">SMS Marketing</h3>
+                    <p class="text-gray-400 mb-4">
+                        Strategic SMS campaigns that connect you with your audience and drive conversions.
+                    </p>
+                    <ul class="text-gray-500 text-sm space-y-2">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Campaign Strategy</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Bulk Messaging</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Automation</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Analytics & Reports</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="py-20 bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="hidden-section">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    My <span class="gradient-text">Skills</span>
+                </h2>
+                <p class="text-gray-400 text-center max-w-2xl mx-auto mb-16">
+                    Technologies and tools I work with
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="hidden-section space-y-6">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>HTML/CSS</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="skill-bar h-full gradient-bg rounded-full" style="width: 0%" data-width="95%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>JavaScript</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="skill-bar h-full gradient-bg rounded-full" style="width: 0%" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>React/Vue</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="skill-bar h-full gradient-bg rounded-full" style="width: 0%" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Tailwind CSS</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="skill-bar h-full gradient-bg rounded-full" style="width: 0%" data-width="92%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden-section space-y-6">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>UI/UX Design</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="skill-bar h-full gradient-bg rounded-full" style="width: 0%" data-width="88%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Figma</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="skill-bar h-full gradient-bg rounded-full" style="width: 0%" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Data Management</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="skill-bar h-full gradient-bg rounded-full" style="width: 0%" data-width="95%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>SMS Marketing</span>
+                            <span>87%</span>
+                        </div>
+                        <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="skill-bar h-full gradient-bg rounded-full" style="width: 0%" data-width="87%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="hidden-section">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    My <span class="gradient-text">Portfolio</span>
+                </h2>
+                <p class="text-gray-400 text-center max-w-2xl mx-auto mb-8">
+                    A showcase of my recent work and projects
+                </p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="hidden-section flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn active px-6 py-2 rounded-full bg-indigo-600 transition-all" data-filter="all">All</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-gray-800 hover:bg-indigo-600 transition-all" data-filter="web">Web Dev</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-gray-800 hover:bg-indigo-600 transition-all" data-filter="design">Data Entry</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-gray-800 hover:bg-indigo-600 transition-all" data-filter="marketing">Marketing</button>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="hidden-section portfolio-item" data-category="web">
+                    <div class="bg-gray-800 rounded-2xl overflow-hidden card-hover group">
+                        <div class="h-56 bg-gradient-to-br from-indigo-600 to-purple-600 relative overflow-hidden">
+                            <img src="image1.png" alt="Portfolio site" class="w-full h-full object-cover object-center">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                                <a href="https://eqa122.onrender.com" target="_blank" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fas fa-link"></i>
+                                </a>
+                                <a href="https://github.com/Fredrickappiah1/Personal-Portfolio-Website-Elliot-Quason-Amoah.git" target="_blank" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fab fa-github"></i> 
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-indigo-400 text-sm">Web Development</span>
+                            <h3 class="text-xl font-bold mt-2">Portfolio site</h3>
+                            <p class="text-gray-400 mt-2 text-sm">A fully responsive personal portfolio website for a multi-disciplinary client.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="hidden-section portfolio-item" data-category="design">
+                    <div class="bg-gray-800 rounded-2xl overflow-hidden card-hover group">
+                        <div class="h-56 bg-gradient-to-br from-pink-600 to-orange-600 relative overflow-hidden">
+                            <img src="excel.avif" alt="Mobile App Dashboard" class="w-full h-full object-cover object-center">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                                <a href="https://drive.google.com/drive/folders/1cgiA6hfiSqsw9ui8lSAafJ3M7U1rZavy?usp=share_link" target="_blank" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fas fa-link"></i>
+                                </a>
+                                <a href="https://github.com/Fredrickappiah1/students-information-database.git" target="_blank" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-pink-400 text-sm">Data Entry</span>
+                            <h3 class="text-xl font-bold mt-2">Student Information Database</h3>
+                            <p class="text-gray-400 mt-2 text-sm">A structured and searchable database to manage student information efficiently. Using charts and tables.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="hidden-section portfolio-item" data-category="web">
+                    <div class="bg-gray-800 rounded-2xl overflow-hidden card-hover group">
+                        <div class="h-56 bg-gradient-to-br from-green-600 to-teal-600 relative overflow-hidden">
+                            <img src="video.png" alt="Videography site" class="w-full h-full object-cover object-center">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                                <a href="https://fredrickappiah1.github.io/Videography-project/" target="_blank" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fas fa-link"></i>
+                                </a>
+                                <a href="https://github.com/Fredrickappiah1/Videography-project.git" target="_blank" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-green-400 text-sm">Web Development</span>
+                            <h3 class="text-xl font-bold mt-2">Videography site</h3>
+                            <p class="text-gray-400 mt-2 text-sm">A creative portfolio website for a videograhper client.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="hidden-section portfolio-item" data-category="marketing">
+                    <div class="bg-gray-800 rounded-2xl overflow-hidden card-hover group">
+                        <div class="h-56 bg-gradient-to-br from-yellow-600 to-red-600 relative overflow-hidden">
+                            <img src="restaurant.avif" alt="Restaurant Campaign" class="w-full h-full object-cover object-center">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                                <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fas fa-chart-line"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-yellow-400 text-sm">SMS Marketing</span>
+                            <h3 class="text-xl font-bold mt-2">Restaurant Campaign</h3>
+                            <p class="text-gray-400 mt-2 text-sm">An SMS campaign that increased reservations by 40%.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="hidden-section portfolio-item" data-category="design">
+                    <div class="bg-gray-800 rounded-2xl overflow-hidden card-hover group">
+                        <div class="h-56 bg-gradient-to-br from-blue-600 to-cyan-600 relative overflow-hidden">
+                            <img src="banking.avif" alt="Banking App UI" class="w-full h-full object-cover object-center">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                                <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fas fa-link"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fab fa-dribbble"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-blue-400 text-sm">UI Design</span>
+                            <h3 class="text-xl font-bold mt-2">Banking App UI</h3>
+                            <p class="text-gray-400 mt-2 text-sm">A clean and modern mobile banking interface design.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="hidden-section portfolio-item" data-category="marketing">
+                    <div class="bg-gray-800 rounded-2xl overflow-hidden card-hover group">
+                        <div class="h-56 bg-gradient-to-br from-purple-600 to-pink-600 relative overflow-hidden">
+                            <img src="cart.avif" alt="E-commerce Promo" class="w-full h-full object-cover object-center">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                                <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-indigo-400 hover:text-white transition-colors">
+                                    <i class="fas fa-chart-line"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-purple-400 text-sm">SMS Marketing</span>
+                            <h3 class="text-xl font-bold mt-2">E-commerce Promo</h3>
+                            <p class="text-gray-400 mt-2 text-sm">Black Friday SMS campaign with 25% conversion rate.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="hidden-section">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    Client <span class="gradient-text">Testimonials</span>
+                </h2>
+                <p class="text-gray-400 text-center max-w-2xl mx-auto mb-16">
+                    What my clients say about working with me
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="hidden-section bg-gray-900 p-8 rounded-2xl card-hover relative">
+                    <i class="fas fa-quote-left text-4xl text-indigo-600/30 absolute top-6 left-6"></i>
+                    <p class="text-gray-400 mt-8 mb-6">
+                        "Outstanding work on our website redesign. The attention to detail and modern design approach exceeded our expectations."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center">
+                            <span class="font-bold">EA</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Elliot Amoah</h4>
+                            <p class="text-gray-500 text-sm">Graphic Designer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden-section bg-gray-900 p-8 rounded-2xl card-hover relative">
+                    <i class="fas fa-quote-left text-4xl text-indigo-600/30 absolute top-6 left-6"></i>
+                    <p class="text-gray-400 mt-8 mb-6">
+                        "The SMS marketing campaign delivered incredible results. Our customer engagement increased by 60% in just one month!"
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center">
+                            <span class="font-bold">MA</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Mindy Appiah</h4>
+                            <p class="text-gray-500 text-sm">Marketing Director</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden-section bg-gray-900 p-8 rounded-2xl card-hover relative">
+                    <i class="fas fa-quote-left text-4xl text-indigo-600/30 absolute top-6 left-6"></i>
+                    <p class="text-gray-400 mt-8 mb-6">
+                        "Reliable, efficient, and incredibly accurate with data entry. A true professional who delivers quality work on time."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center">
+                            <span class="font-bold">NS</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Nii Stephens</h4>
+                            <p class="text-gray-500 text-sm">Operations Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="hidden-section">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    Get In <span class="gradient-text">Touch</span>
+                </h2>
+                <p class="text-gray-400 text-center max-w-2xl mx-auto mb-16">
+                    Let's discuss your project and create something amazing together
+                </p>
+            </div>
+
+            <div class="max-w-2xl mx-auto">
+                <div class="hidden-section space-y-8">
+                    <!-- Contact Info Cards -->
+                    <div class="grid md:grid-cols-3 gap-6 mb-12">
+                        <div class="bg-gray-800 p-6 rounded-2xl text-center card-hover">
+                            <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-envelope text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-lg">Email</h4>
+                            <p class="text-gray-400 text-sm mt-2">yawtawiah152@gmail.com</p>
+                        </div>
+
+                        <div class="bg-gray-800 p-6 rounded-2xl text-center card-hover">
+                            <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-phone text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-lg">Phone</h4>
+                            <p class="text-gray-400 text-sm mt-2">+233 241 222 609</p>
+                        </div>
+
+                        <div class="bg-gray-800 p-6 rounded-2xl text-center card-hover">
+                            <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-map-marker-alt text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-lg">Location</h4>
+                            <p class="text-gray-400 text-sm mt-2">Accra, Ghana</p>
+                        </div>
+                    </div>
+
+                    <!-- Social Media Handles -->
+                    <div class="text-center">
+                        <h4 class="font-semibold text-xl mb-6">Connect With Me</h4>
+                        <div class="flex justify-center gap-5">
+                            <a href="https://www.linkedin.com/in/frederick-appiah-3857a8392/" target="_blank" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-all hover:scale-110 group">
+                                <i class="fab fa-linkedin-in text-xl group-hover:scale-110 transition-transform"></i>
+                            </a>
+                            <a href="https://github.com/Fredrickappiah1" target="_blank" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-all hover:scale-110 group">
+                                <i class="fab fa-github text-xl group-hover:scale-110 transition-transform"></i>
+                            </a>
+                            <a href="https://x.com/apfred_" target="_blank" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-all hover:scale-110 group">
+                                <i class="fab fa-twitter text-xl group-hover:scale-110 transition-transform"></i>
+                            </a>
+                            <a href="https://www.instagram.com" target="_blank" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-all hover:scale-110 group">
+                                <i class="fab fa-instagram text-xl group-hover:scale-110 transition-transform"></i>
+                            </a>
+                           
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800/50 py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-gray-400">
+                © 2025 <span class="gradient-text font-semibold">TeeLabs Digital</span>. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 gradient-bg rounded-full flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:scale-110 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Typewriter Effect
+        const roles = ['Front-end Developer', 'Data Entry Specialist', 'SMS Marketer'];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriter = document.getElementById('typewriter');
+
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+            
+            if (isDeleting) {
+                typewriter.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriter.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                setTimeout(() => isDeleting = true, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+            }
+
+            const typingSpeed = isDeleting ? 50 : 100;
+            setTimeout(typeEffect, typingSpeed);
+        }
+
+        typeEffect();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuBtn.innerHTML = mobileMenu.classList.contains('hidden') 
+                ? '<i class="fas fa-bars"></i>' 
+                : '<i class="fas fa-times"></i>';
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Navbar Background on Scroll
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-gray-900/95', 'backdrop-blur-lg', 'shadow-lg');
+                navbar.classList.remove('bg-transparent');
+            } else {
+                navbar.classList.remove('bg-gray-900/95', 'backdrop-blur-lg', 'shadow-lg');
+                navbar.classList.add('bg-transparent');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate skill bars
+                    const skillBars = entry.target.querySelectorAll('.skill-bar');
+                    skillBars.forEach(bar => {
+                        bar.style.width = bar.dataset.width;
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.hidden-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Portfolio Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('bg-indigo-600'));
+                filterBtns.forEach(b => b.classList.add('bg-gray-800'));
+                btn.classList.remove('bg-gray-800');
+                btn.classList.add('bg-indigo-600');
+
+                const filter = btn.dataset.filter;
+
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeInUp 0.5s ease-out forwards';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
